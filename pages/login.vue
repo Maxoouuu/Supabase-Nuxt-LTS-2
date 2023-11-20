@@ -1,8 +1,17 @@
 <script setup lang="ts">
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient();
+const router = useRouter();
 
-const loading = ref(false)
-const email = ref('')
+const loading = ref(false);
+const email = ref('');
+
+onMounted(() => {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session) {
+      router.push('/'); // Redirige vers la page d'accueil si l'utilisateur est connecté
+    }
+  });
+});
 
 const handleLogin = async () => {
   try {
