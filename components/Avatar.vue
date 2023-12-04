@@ -63,9 +63,9 @@ watch(path, () => {
 <template>
   <div class="flex justify-center items-center">
     <div v-if="src" class="flex-shrink-0">
-      <img :src="src" alt="Avatar" class="rounded-full w-40 h-40 object-cover" />
+      <img :src="src" alt="Avatar" class="rounded-full w-32 h-32 object-cover" /> <!-- Taille de l'avatar réduite ici -->
     </div>
-    <div v-else class="flex-shrink-0 rounded-full bg-gray-300 w-40 h-40 flex items-center justify-center">
+    <div v-else class="flex-shrink-0 rounded-full bg-gray-300 w-32 h-32 flex items-center justify-center">
       <span class="text-gray-500">No image</span>
     </div>
     <div class="ml-4">
