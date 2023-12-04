@@ -61,19 +61,25 @@ watch(path, () => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center">
-    <div v-if="src" class="flex-shrink-0">
-      <img :src="src" alt="Avatar" class="rounded-full w-32 h-32 object-cover" /> <!-- Taille de l'avatar réduite ici -->
+  <div class="flex flex-col items-center">
+    <!-- Conteneur pour l'avatar et le bouton d'upload -->
+    <div class="flex justify-center items-center mb-4">
+      <!-- Avatar Image -->
+      <div v-if="src" class="flex-shrink-0">
+        <img :src="src" alt="Avatar" class="rounded-full w-24 h-24 object-cover" />
+      </div>
+      <div v-else class="rounded-full bg-gray-300 w-24 h-24 flex items-center justify-center">
+        <span class="text-gray-500">No image</span>
+      </div>
+
+      <!-- Upload Button -->
+      <div class="ml-4">
+        <label for="single" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 cursor-pointer">
+          {{ uploading ? 'Uploading ...' : 'Upload' }}
+        </label>
+        <input class="opacity-0 absolute w-0 h-0" type="file" id="single" accept="image/*" @change="uploadAvatar" :disabled="uploading" />
+      </div>
     </div>
-    <div v-else class="flex-shrink-0 rounded-full bg-gray-300 w-32 h-32 flex items-center justify-center">
-      <span class="text-gray-500">No image</span>
-    </div>
-    <div class="ml-4">
-      <label for="single" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 cursor-pointer flex items-center justify-center"
-             :class="{ 'opacity-50 cursor-not-allowed': uploading }">
-        {{ uploading ? 'Uploading ...' : 'Upload' }}
-      </label>
-      <input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" type="file" id="single" accept="image/*" @change="uploadAvatar" :disabled="uploading" />
-    </div>
+    <!-- Autres éléments du formulaire ici -->
   </div>
 </template>
