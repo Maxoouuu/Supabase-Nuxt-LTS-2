@@ -12,7 +12,9 @@ const files = ref()
 
 const downloadImage = async () => {
   try {
-    const { data, error } = await supabase.storage.from('avatars').download(path.value)
+    const { data, error } = await supabase.storage
+      .from('avatars')
+      .download(path.value)
     if (error) throw error
     src.value = URL.createObjectURL(data)
   } catch (error) {
@@ -34,7 +36,9 @@ const uploadAvatar = async (evt) => {
     const fileName = `${Math.random()}.${fileExt}`
     const filePath = `${fileName}`
 
-    const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(filePath, file)
 
     if (uploadError) throw uploadError
 
@@ -57,28 +61,19 @@ watch(path, () => {
 </script>
 
 <template>
-  <div>
-    <img
-      v-if="src"
-      :src="src"
-      alt="Avatar"
-      class="avatar image"
-      style="width: 10em; height: 10em;"
-    />
-    <div v-else class="avatar no-image" :style="{ height: size, width: size }" />
-
-    <div style="width: 10em; position: relative;">
-      <label class="button primary block" for="single">
+  <div class="flex justify-center items-center">
+    <div v-if="src" class="flex-shrink-0">
+      <img :src="src" alt="Avatar" class="rounded-full w-40 h-40 object-cover" />
+    </div>
+    <div v-else class="flex-shrink-0 rounded-full bg-gray-300 w-40 h-40 flex items-center justify-center">
+      <span class="text-gray-500">No image</span>
+    </div>
+    <div class="ml-4">
+      <label for="single" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 cursor-pointer flex items-center justify-center"
+             :class="{ 'opacity-50 cursor-not-allowed': uploading }">
         {{ uploading ? 'Uploading ...' : 'Upload' }}
       </label>
-      <input
-        style="position: absolute; visibility: hidden;"
-        type="file"
-        id="single"
-        accept="image/*"
-        @change="uploadAvatar"
-        :disabled="uploading"
-      />
+      <input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" type="file" id="single" accept="image/*" @change="uploadAvatar" :disabled="uploading" />
     </div>
   </div>
 </template>
