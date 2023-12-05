@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     'nuxt-simple-sitemap',
     '@pinia/nuxt',
+    
   ],
   css: ['@/assets/css/main.css'],
 
